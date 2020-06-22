@@ -8,7 +8,7 @@ class Jettings:
 
     def __init__(self, config_filepath):
         self.config_filepath=config_filepath
-        self.init_jconfig_file(self.config_filepath)
+        self.__init_jconfig_file(self.config_filepath)
 
 
     def __dic_nested_set(self,dic,list_pathkeys,a_value):
@@ -222,11 +222,39 @@ class Jettings:
         #Return a valid filepath string.
         return expanded_filepath
 
+    def __init_jconfig_file(self,filepath):
+        #USAGE
+        #Usage example
+        #               init_jconfig_file('~/.config.txt')
+        #
+        #Creates an initialized config file if the one mentioned doesn't exist.
+
+        #TYPE CHECKING
+        #Let's do some argument type checking on json_string, list_pathkeys
+        #Remember historicaly bool is subclass of int
+        if not isinstance(filepath, str) == True : raise TypeError
+
+        #EXPAND THAT FILE PATH
+        expanded_filepath = self.__expand_filepath(filepath)
+
+        #IMPLEMENTATION
+        CONFIG_DIR_PATH=os.path.dirname(expanded_filepath)
+        CONFIG_FILE_PATH=expanded_filepath
+
+        if( not os.path.exists(CONFIG_DIR_PATH)):
+            Path(CONFIG_DIR_PATH).mkdir(parents=True, exist_ok=True)
+
+        if( not os.path.exists(CONFIG_FILE_PATH)):
+            Path(CONFIG_FILE_PATH).touch()
+            with open(CONFIG_FILE_PATH,'w') as json_file:
+                json.dump({}, json_file)
+
+        #OUTPUT
+        #A fresh config file at filepath if it didn't already exist.
 
 
 
-
-    def jsets(self, list_pathkeys, a_value):
+    def sets(self, list_pathkeys, a_value):
         filepath=self.config_filepath
         #USAGE:
         #Usage example:
@@ -251,7 +279,7 @@ class Jettings:
         #Write to file
         self.__json_write_file(checked_filepath,json_string)
 
-    def jgets(self,list_pathkeys):
+    def gets(self,list_pathkeys):
         filepath=self.config_filepath
         #USAGE:
         #Usage example:
@@ -281,32 +309,4 @@ class Jettings:
         #Return jason value addressed by the list_pathkeys json path.
         return json_value
 
-    def init_jconfig_file(self,filepath):
-        #USAGE
-        #Usage example
-        #               init_jconfig_file('~/.config.txt')
-        #
-        #Creates an initialized config file if the one mentioned doesn't exist.
 
-        #TYPE CHECKING
-        #Let's do some argument type checking on json_string, list_pathkeys
-        #Remember historicaly bool is subclass of int
-        if not isinstance(filepath, str) == True : raise TypeError
-
-        #EXPAND THAT FILE PATH
-        expanded_filepath = self.__expand_filepath(filepath)
-
-        #IMPLEMENTATION
-        CONFIG_DIR_PATH=os.path.dirname(expanded_filepath)
-        CONFIG_FILE_PATH=expanded_filepath
-
-        if( not os.path.exists(CONFIG_DIR_PATH)):
-            Path(CONFIG_DIR_PATH).mkdir(parents=True, exist_ok=True)
-
-        if( not os.path.exists(CONFIG_FILE_PATH)):
-            Path(CONFIG_FILE_PATH).touch()
-            with open(CONFIG_FILE_PATH,'w') as json_file:
-                json.dump({}, json_file)
-
-        #OUTPUT
-        #A fresh config file at filepath if it didn't already exist.
