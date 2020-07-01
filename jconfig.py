@@ -54,6 +54,25 @@ class Jettings:
         else:
             return self.__dic_nested_get(dic[list_pathkeys[0]], list_pathkeys[1:])
 
+    def __dic_nested_del(self,dic,list_pathkeys):
+        #USAGE
+        #Usage example: 
+        #                   __dic_nested_set(my_dict,['key1','key2','key3'],a_value)
+        # equivalent to     my_dict['key1']['key2']['key3']=a_value
+        # .setdefault       if key does not exist, "my_dic.setdefault(key,value)"
+        #                   inserts key with the specified value. 
+        #                   value could be another empty dic, {}.
+
+        #TYPE CHECKING
+        #Let's do some argument type checking on json_string, list_pathkeys
+        #Remember historicaly bool is subclass of int
+        if not isinstance(dic, dict) == True : raise TypeError
+        if not isinstance(list_pathkeys, list) == True : raise TypeError
+
+        #IMPLEMENTATION
+        for key in list_pathkeys[:-1]:
+            dic = dic.setdefault(key,{})
+        del dic[list_pathkeys[-1]]
 
     def __json_nested_set(self,json_string, list_pathkeys, a_value):
         #USAGE
@@ -103,6 +122,33 @@ class Jettings:
         #Retuns the json value refenenced json keys
         return self.__dic_nested_get(dic,list_pathkeys)
         pass
+
+    def __json_nested_del(self,json_string, list_pathkeys):
+        #USAGE
+        #Usage example: 
+        #                       __json_nested_set(json_string,['key1','key2','key3'],a_value)
+        #python dict equivalent to     json_dict['key1']['key2']['key3']=a_value
+        
+        #TYPE CHECKING
+        #Let's do some argument type checking on json_string, list_pathkeys
+        #Remember historicaly bool is subclass of int
+        if not isinstance(json_string, str) == True : raise TypeError
+        if not isinstance(list_pathkeys, list) == True : raise TypeError
+     
+        
+    
+        #IMPLEMENTATION
+        try:
+            dic=json.loads(json_string)
+        except:
+            print("Could not parse JSON")
+            raise RuntimeError
+
+        self.__dic_nested_del(dic,list_pathkeys)
+
+        #RETURN
+        #Returns the modified json string
+        return json.dumps(dic)
 
     def __json_write_file(self,filepath,json_string):
         #USAGE:
@@ -252,6 +298,7 @@ class Jettings:
         #OUTPUT
         #A fresh config file at filepath if it didn't already exist.
 
+  
 
 
     def sets(self, list_pathkeys, a_value):
@@ -278,6 +325,27 @@ class Jettings:
         #OUTPUT
         #Write to file
         self.__json_write_file(checked_filepath,json_string)
+
+    def exists(self,list_pathkeys):
+        filepath=self.config_filepath
+
+        #TYPE CHECKING
+        #Let's do some argument type checking on json_string, list_pathkeys
+        #Remember historicaly bool is subclass of int
+        if not isinstance(filepath, str) == True : raise TypeError
+        if not isinstance(list_pathkeys, list) == True : raise TypeError
+
+        #FILE CHECKS
+        checked_filepath=self.__filepathchecks(filepath)
+
+        #IMPLEMENTATION
+        json_string = self.__json_read_file(checked_filepath)
+
+        try:
+            json_value = self.__json_nested_get(json_string, list_pathkeys)
+            return True
+        except KeyError as e:
+            return False
 
     def gets(self,list_pathkeys):
         filepath=self.config_filepath
@@ -308,5 +376,38 @@ class Jettings:
         #RETURN
         #Return jason value addressed by the list_pathkeys json path.
         return json_value
+
+    def dels(self, list_pathkeys):
+        filepath=self.config_filepath
+        #USAGE:
+        #Usage example:
+        #                               jsets('filepath',['key1','key2','key3'],'a_value')
+        #pyhton dict equivalent to      json_dict['key1']['key2']['key3']='a_value'
+
+        #TYPE CHECKING
+        #Let's do some argument type checking on json_string, list_pathkeys
+        #Remember historicaly bool is subclass of int
+        if not isinstance(filepath, str) == True : raise TypeError
+        if not isinstance(list_pathkeys, list) == True : raise TypeError
+        
+        #FILE CHECKS
+        checked_filepath=self.__filepathchecks(filepath)
+
+        does_key_exist=self.exists(list_pathkeys)
+
+        if(does_key_exist==False):
+            print(str(self.config_filepath) +" does not contain the key you want to delete" )
+            return
+
+        #IMPLEMENTATION
+        json_string = self.__json_read_file(checked_filepath)
+        json_string = self.__json_nested_del(json_string, list_pathkeys)
+        
+        #OUTPUT
+        #Write to file
+        self.__json_write_file(checked_filepath,json_string)
+        
+
+        
 
 
