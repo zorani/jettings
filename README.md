@@ -1,7 +1,9 @@
 # JETTINGS
 
 Jettings is a super simple JSON based settings file manager.
+
 Jettings will help you quick start your python projects.
+
 With Jettings you can quickly:
 
 - Create a jettings file
@@ -19,6 +21,7 @@ Each Jettings file you create will store your settings as readable JSON.
 ## Create a Jettings file
 
 It is entirley up to you where you place your application settings file.
+
 Here, I am placing an example settings.cfg file in a hidden application
 settings directory in the users home directory.
 
