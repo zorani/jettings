@@ -92,8 +92,7 @@ class Jettings:
         try:
             dic=json.loads(json_string)
         except:
-            print("Could not parse JSON")
-            raise RuntimeError
+            raise RuntimeError ( "Could not parse JSON")
 
         self.__dic_nested_set(dic,list_pathkeys, a_value)
 
@@ -141,8 +140,7 @@ class Jettings:
         try:
             dic=json.loads(json_string)
         except:
-            print("Could not parse JSON")
-            raise RuntimeError
+            raise RuntimeError ( "Could not parse JSON")
 
         self.__dic_nested_del(dic,list_pathkeys)
 
@@ -165,8 +163,8 @@ class Jettings:
         try:
             dic=json.loads(json_string)
         except:
-            print("Could not parse JSON")
-            raise RuntimeError
+            raise RuntimeError ( "Could not parse JSON")
+            
 
         #write json to file while beautiful
         #json.dump always expects to be given a dict
@@ -396,7 +394,8 @@ class Jettings:
         does_key_exist=self.exists(list_pathkeys)
 
         if(does_key_exist==False):
-            print(str(self.config_filepath) +" does not contain the key you want to delete" )
+            pass
+            #print(str(self.config_filepath) +" does not contain the key you want to delete" )
             return
 
         #IMPLEMENTATION
