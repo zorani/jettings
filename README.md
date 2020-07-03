@@ -12,6 +12,7 @@ With Jettings you can quickly:
 - Delete a jetting value in that file
 
 You can have as many jetting files as you need for your application.
+
 Each Jettings file you create will store your settings as readable JSON.
 
 ## USAGE
