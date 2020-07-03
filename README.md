@@ -17,6 +17,11 @@ Each Jettings file you create will store your settings as readable JSON.
 ## First Import Jettings
     from jettings import Jettings
 ## Create a Jettings file
+
+It is entirley up to you where you place your application settings file.
+Here, I am placing an example settings.cfg file in a hidden application
+settings directory in the users home directory.
+
     app_settings=Jettings("~/.yourappsettings/settings.cfg")
 ## Add a jetting value using sets
     app_settings.sets(['myFirstJetting'],'1')
