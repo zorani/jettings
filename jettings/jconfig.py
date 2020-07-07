@@ -57,11 +57,7 @@ class Jettings:
     def __dic_nested_del(self,dic,list_pathkeys):
         #USAGE
         #Usage example: 
-        #                   __dic_nested_set(my_dict,['key1','key2','key3'],a_value)
-        # equivalent to     my_dict['key1']['key2']['key3']=a_value
-        # .setdefault       if key does not exist, "my_dic.setdefault(key,value)"
-        #                   inserts key with the specified value. 
-        #                   value could be another empty dic, {}.
+        #                   __dic_nested_del(my_dict,['key1','key2','key3'])
 
         #TYPE CHECKING
         #Let's do some argument type checking on json_string, list_pathkeys
@@ -125,8 +121,7 @@ class Jettings:
     def __json_nested_del(self,json_string, list_pathkeys):
         #USAGE
         #Usage example: 
-        #                       __json_nested_set(json_string,['key1','key2','key3'],a_value)
-        #python dict equivalent to     json_dict['key1']['key2']['key3']=a_value
+        #                       __json_nested_del(json_string,['key1','key2','key3'])
         
         #TYPE CHECKING
         #Let's do some argument type checking on json_string, list_pathkeys
@@ -326,6 +321,9 @@ class Jettings:
 
     def exists(self,list_pathkeys):
         filepath=self.config_filepath
+        #USAGE:
+        #Usage example:
+        #               exists(['key1','key2','key3'])
 
         #TYPE CHECKING
         #Let's do some argument type checking on json_string, list_pathkeys
@@ -379,8 +377,7 @@ class Jettings:
         filepath=self.config_filepath
         #USAGE:
         #Usage example:
-        #                               jsets('filepath',['key1','key2','key3'],'a_value')
-        #pyhton dict equivalent to      json_dict['key1']['key2']['key3']='a_value'
+        #                               jdels(['key1','key2','key3'])
 
         #TYPE CHECKING
         #Let's do some argument type checking on json_string, list_pathkeys
