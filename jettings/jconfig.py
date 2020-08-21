@@ -45,8 +45,14 @@ class Jettings:
         #TYPE CHECKING
         #Let's do some argument type checking on json_string, list_pathkeys
         #Remember historicaly bool is subclass of int
-        if not isinstance(dic, (dict,str)) == True : raise TypeError
+        #if not isinstance(dic, (dict,str)) == True : raise TypeError
+        #if not isinstance(list_pathkeys, list) == True : raise TypeError
+    
         if not isinstance(list_pathkeys, list) == True : raise TypeError
+        #the addressed location pay store sub-structures which are legitamate but screw up counting,
+        #So we only check them is the list is greater than zero
+        if (len(list_pathkeys)>0):
+            if not isinstance(dic, (dict,str)) == True : raise TypeError
         
         #IMPLEMENTATION
         if len(list_pathkeys) == 0:
