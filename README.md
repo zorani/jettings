@@ -68,3 +68,7 @@ using python lists.
 
 ## Check if a jetting exists.
     does_this_jetting_exist=app_settings.exists(['Customers','1'])
+   
+### Returns Boolean
+    True - If jetting entry DOES exist.
+    False - If jetting entry DOES NOT exist.
